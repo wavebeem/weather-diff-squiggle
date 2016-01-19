@@ -1,5 +1,5 @@
-const Promise = require('bluebird');
-const request = Promise.promisify(require('request'));
+const Bluebird = require('bluebird');
+const request = Bluebird.promisify(require('request'));
 
 function get(url) {
   return request(url);

@@ -1,6 +1,7 @@
 {
     "node": true,
     "bitwise": true,
+    "browser": true,
     "curly": true,
     "eqeqeq": true,
     "funcscope": true,

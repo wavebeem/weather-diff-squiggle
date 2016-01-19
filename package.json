@@ -4,12 +4,14 @@
   "description": "A web UI to diff two weather forecasts by ZIP code",
   "main": "src/main.js",
   "scripts": {
+    "build": "browserify src/app/main.js > app/bundle.js",
     "start": "node src/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jshint src && jscs src"
   },
   "author": "Brian Mock <brian@mockbrian.com>",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^13.0.0",
     "jscs": "^2.8.0",
     "jshint": "^2.9.1"
   },

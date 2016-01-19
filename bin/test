@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+PATH="$(npm bin):$PATH"
+
+jshint src
+jscs src

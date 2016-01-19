@@ -2,7 +2,6 @@ const express = require('express');
 const WU_API_KEY = require('./wu-api-key');
 const WU = require('./weather-underground').withKey(WU_API_KEY);
 
-const REGEX_ZIP = /[0-9]{5}/;
 const STATIC_ROOT = __dirname + '/../app';
 
 function extractWeatherData(data) {
@@ -23,13 +22,14 @@ express()
   })
   .get('/weather/:zip', (req, res) => {
     const zip = req.params.zip;
-    if (REGEX_ZIP.test(zip)) {
-      WU.weather(zip)
+    const result = validators.zip(zip);
+    if (result[0]) {
+      WU.weather(result[1])
         .then(extractWeatherData)
         .then(data => res.send(data))
         .catch(err => res.sendStatus(500));
     } else {
-      res.status(400).send({message: 'Invalid ZIP Code'});
+      res.status(400).send({message: result[1]});
     }
   })
   .listen(3000, () => {

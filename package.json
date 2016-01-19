@@ -4,6 +4,7 @@
   "description": "A web UI to diff two weather forecasts by ZIP code",
   "main": "src/main.js",
   "scripts": {
+    "watch": "watchify --debug src/app/main.js -o app/bundle.js",
     "build": "browserify src/app/main.js > app/bundle.js",
     "start": "node src/main.js",
     "test": "jshint src && jscs src"
@@ -13,12 +14,14 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "jscs": "^2.8.0",
-    "jshint": "^2.9.1"
+    "jshint": "^2.9.1",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "bluebird": "^3.1.1",
     "express": "^4.13.3",
     "mithril": "^0.2.0",
+    "redux": "^3.0.5",
     "request": "^2.67.0"
   }
 }

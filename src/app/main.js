@@ -1,10 +1,5 @@
 const m = require('mithril');
-
-const Demo = {
-  controller: () => ({message: 'Hello world!'}),
-  view: ctrl => m('div', ctrl.message)
-};
+const WeatherDiff = require('./weather-diff');
 
 const root = document.getElementById('root');
-
-m.mount(root, Demo);
+m.mount(root, WeatherDiff);

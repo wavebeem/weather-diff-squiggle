@@ -23,6 +23,8 @@ function render() {
     );
 }
 
+const helpText = 'Enter two valid ZIP codes below to compare weather.';
+
 function createSummary() {
   const p1 = this.props.place1;
   const p2 = this.props.place2;
@@ -36,7 +38,7 @@ function createSummary() {
     const dt = t1 - t2;
     return R('div', {className: 'summary'}, formatDiff(c1, c2, dt));
   } else {
-    return R('div', {className: 'summary'}, 'Enter two valid ZIP codes below to compare weather.');
+    return R('div', {className: 'summary'}, helpText);
   }
 }
 
@@ -45,11 +47,11 @@ function formatDiff(c1, c2, dt) {
   c2 = formatCity(c2);
   const diff = Math.abs(dt);
   if (dt < 0) {
-    return [c2, ' is ', diff, ' ºF warmer than ', c1, '.'];
+    return R('span', {}, c2, ' is ', diff, ' ºF warmer than ', c1, '.');
   } else if (dt > 0) {
-    return [c1, ' is ', diff, ' ºF warmer than ', c2, '.'];
+    return R('span', {}, c1, ' is ', diff, ' ºF warmer than ', c2, '.');
   } else {
-    return [c1, ' is the same temperature as ', c2, '.'];
+    return R('span', {}, c1, ' is the same temperature as ', c2, '.');
   }
 }
 

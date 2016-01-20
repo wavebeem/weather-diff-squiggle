@@ -4,10 +4,11 @@
 
 html {
   background: #e6f2ff;
-  background: linear-gradient(to top, #e6f2ff, #ffffff) fixed;
+  background: linear-gradient(to bottom, #ffffff, #EBF5FF) fixed;
   color: rgba(0, 0, 0, 0.80);
   font-family: Helvetica, Arial, sans-serif;
   padding: 10px;
+  min-height: 100%;
 }
 
 input {
@@ -16,18 +17,19 @@ input {
 }
 
 .main-logo {
-  font-size: 5em;
+  font-size: 3em;
   margin: 10px 0;
   margin-bottom: 30px;
-  color: #000;
+  color: black;
 }
 
 .wunderground-logo {
-  display: block;
+  display: inline-block;
 }
 
 .wunderground-logo img {
   width: 385px;
+  max-width: 100%;
 }
 
 body {
@@ -36,31 +38,40 @@ body {
 }
 
 .weatherdiff {
+  text-align: center;
+}
+
+.cardholder {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
-  -webkit-justify-content: space-between;
-  justify-content:space-between;
+  -webkit-justify-content: space-around;
+  justify-content:space-around;
 }
 
 .weatherdiff .summary {
-  display: block;
-  width: 100%;
-  padding-top: 2em;
+  display: inline-block;
   font-size: 1.3em;
   text-align: center;
   margin: 0 auto;
+  background: #53769C;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-bottom: 1em;
 }
 
 .weatherpicker {
-  -webkit-flex: 1 0 300px;
+  -webkit-flex: 1 0 50%;
   flex: 1 0 300px;
   margin: 10px;
 }
 
 .weatherpicker .message {
   text-align: center;
+  font-weight: bold;
+  color: #cc0000;
 }
 
 .zipinput {
@@ -80,26 +91,29 @@ body {
   border: 0;
   margin: 0 auto;
   text-align: center;
-  margin-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.40);
-  background: transparent;
+  margin-top: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  background: #fff;
   padding: 4px 10px;
   width: 7em;
 }
 
 .zipinput input:focus {
-  outline: 3px solid #f57900;
+  outline: none;
+  box-shadow: 0 0 2px 4px #f57900;
+  border-color: transparent;
+  background: #fff;
 }
 
 .weathercard {
   background: #fff;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.05),
-    0 3px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   padding: 10px;
   text-align: center;
   font-size: 1.5em;
+  opacity: 1;
 }
 
 .weather-icon {

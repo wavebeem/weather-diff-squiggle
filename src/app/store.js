@@ -21,26 +21,34 @@ function assertOK(response) {
   return response;
 }
 
+function getJSON(response) {
+  return response.json();
+}
+
 function fetchWeather(zip) {
   return fetch('/weather/' + zip)
     .then(assertOK)
-    .then(x => x.json());
+    .then(getJSON);
+}
+
+function dispatchWeatherChange(id, x) {
+  store.dispatch({
+    type: 'WEATHER_CHANGE_' + id,
+    value: x
+  })
+}
+
+function dispatchWeatherFail(id, e) {
+  store.dispatch({
+    type: 'WEATHER_FAIL_' + id,
+    value: e.message
+  });
 }
 
 function updateWeather(id, zip) {
   fetchWeather(zip)
-    .then(x => {
-      store.dispatch({
-        type: 'WEATHER_CHANGE_' + id,
-        value: x
-      })
-    })
-    .catch(e => {
-      store.dispatch({
-        type: 'WEATHER_FAIL_' + id,
-        value: e.message
-      });
-    });
+    .then(dispatchWeatherChange.bind(null, id))
+    .catch(dispatchWeatherFail.bind(null, id));
 }
 
 // Both places should have the same logic for validating ZIP code and fetching

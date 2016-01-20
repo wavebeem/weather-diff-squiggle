@@ -10,13 +10,13 @@ function onInput(event) {
 function render() {
   return R('div', {className: 'zipinput'},
     R('label', {},
+      'ZIP Code',
       R('input', {
         placeholder: 'e.g. 97217',
         key: this.props.key,
         value: this.props.value,
         onInput: this.onInput
-      }),
-      'ZIP Code'
+      })
     )
   );
 }

@@ -7,18 +7,19 @@ const R = React.createElement;
 
 function render() {
   return R('div', {className: 'weatherdiff'},
-      R('div', {}, this.props.message),
-      R(WeatherPicker, {
-        key: '1',
-        place: this.props.place1,
-        updateZip: this.props.updateZip1
-      }),
-      R(WeatherPicker, {
-        key: '2',
-        place: this.props.place2,
-        updateZip: this.props.updateZip2
-      }),
-      this.createSummary()
+      this.createSummary(),
+      R('div', {className: 'cardholder'},
+        R(WeatherPicker, {
+          key: '1',
+          place: this.props.place1,
+          updateZip: this.props.updateZip1
+        }),
+        R(WeatherPicker, {
+          key: '2',
+          place: this.props.place2,
+          updateZip: this.props.updateZip2
+        })
+      )
     );
 }
 
@@ -28,8 +29,6 @@ function createSummary() {
   var w1 = p1.weather;
   var w2 = p2.weather;
   if (w1 && w2) {
-    console.log(w1);
-    console.log(w2);
     const t1 = w1.temperature;
     const t2 = w2.temperature;
     const c1 = w1.city + ' (' + p1.zip + ')';
@@ -37,7 +36,7 @@ function createSummary() {
     const dt = t1 - t2;
     return R('div', {className: 'summary'}, formatDiff(c1, c2, dt));
   } else {
-    return null;
+    return R('div', {className: 'summary'}, 'Enter two valid ZIP codes below to compare weather.');
   }
 }
 
@@ -62,16 +61,17 @@ function mapStateToProps(state) {
   return state;
 }
 
+function updateZip(dispatch, n, value) {
+  return dispatch({
+    type: 'ZIP_CHANGE_' + n,
+    value: value
+  });
+}
+
 function mapDispatchToProps(dispatch) {
   return {
-    updateZip1: value => dispatch({
-      type: 'ZIP_CHANGE_1',
-      value: value
-    }),
-    updateZip2: value => dispatch({
-      type: 'ZIP_CHANGE_2',
-      value: value
-    })
+    updateZip1: updateZip.bind(null, dispatch, 1),
+    updateZip2: updateZip.bind(null, dispatch, 2)
   };
 }
 

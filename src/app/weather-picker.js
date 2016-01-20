@@ -3,38 +3,30 @@ const WeatherCard = require('./weather-card').WeatherCard;
 const ZipInput = require('./zip-input').ZipInput;
 const R = React.createElement;
 
-function wrap(items) {
+function wrap(props, items) {
   const input =
     R(ZipInput, {
-      key: this.props.key,
-      value: this.props.place.zip,
-      updateZip: this.props.updateZip
+      key: props.key,
+      value: props.place.zip,
+      updateZip: props.updateZip
     });
   return R('div', {className: 'weatherpicker'}, input, items);
 }
 
-function message(text) {
-  return this.wrap(R('div', {className: 'message'}, text));
+function message(props, text) {
+  return wrap(props, R('div', {className: 'message'}, text));
 }
 
-function render() {
-  if (!this.props.place.zipOk) {
-    return this.message('Incorrect ZIP format.');
-  } else if (!this.props.place.weatherOk) {
-    return this.message('Location not found.');
-  } else if (this.props.place.weather !== null) {
-    return this.wrap(R(WeatherCard, {weather: this.props.place.weather}));
+function WeatherPicker(props) {
+  if (!props.place.zipOk) {
+    return message(props, 'Incorrect ZIP format.');
+  } else if (!props.place.weatherOk) {
+    return message(props, 'Location not found.');
+  } else if (props.place.weather !== null) {
+    return wrap(props, R(WeatherCard, {weather: props.place.weather}));
   } else {
-    return this.message('Loading…');
+    return message(props, 'Loading…');
   }
 }
-
-const WeatherPicker =
-  React.createClass({
-    displayName: 'WeatherPicker',
-    message: message,
-    wrap: wrap,
-    render: render
-  });
 
 exports.WeatherPicker = WeatherPicker;

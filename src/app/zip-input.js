@@ -1,30 +1,23 @@
 const React = require('react');
 const R = React.createElement;
 
-function onInput(event) {
+function onInput(props, event) {
   const text = event.target.value.trim();
-  this.props.updateZip(text);
+  props.updateZip(text);
 }
 
-function render() {
+function ZipInput(props) {
   return R('div', {className: 'zipinput'},
     R('label', {},
       'ZIP Code',
       R('input', {
         placeholder: 'e.g. 97217',
-        key: this.props.key,
-        value: this.props.value,
-        onInput: this.onInput
+        key: props.key,
+        value: props.value,
+        onInput: onInput.bind(null, props)
       })
     )
   );
 }
-
-const ZipInput =
-  React.createClass({
-    displayName: 'ZipInput',
-    render: render,
-    onInput: onInput
-  });
 
 exports.ZipInput = ZipInput;

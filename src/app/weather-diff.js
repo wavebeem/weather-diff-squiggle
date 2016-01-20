@@ -4,19 +4,19 @@ const WeatherPicker = require('./weather-picker').WeatherPicker;
 
 const R = React.createElement;
 
-function render() {
+function WeatherDiff(props) {
   return R('div', {className: 'weatherdiff'},
-      this.createSummary(),
+      createSummary(props),
       R('div', {className: 'cardholder'},
         R(WeatherPicker, {
           key: '1',
-          place: this.props.place1,
-          updateZip: this.props.updateZip1
+          place: props.place1,
+          updateZip: props.updateZip1
         }),
         R(WeatherPicker, {
           key: '2',
-          place: this.props.place2,
-          updateZip: this.props.updateZip2
+          place: props.place2,
+          updateZip: props.updateZip2
         })
       )
     );
@@ -24,9 +24,9 @@ function render() {
 
 const helpText = 'Enter two valid ZIP codes below to compare weather.';
 
-function createSummary() {
-  const p1 = this.props.place1;
-  const p2 = this.props.place2;
+function createSummary(props) {
+  const p1 = props.place1;
+  const p2 = props.place2;
   var w1 = p1.weather;
   var w2 = p2.weather;
   if (w1 && w2) {
@@ -75,13 +75,6 @@ function mapDispatchToProps(dispatch) {
     updateZip2: updateZip.bind(null, dispatch, 2)
   };
 }
-
-const WeatherDiff =
-  React.createClass({
-    displayName: 'WeatherDiff',
-    createSummary: createSummary,
-    render: render
-  });
 
 exports.WeatherDiff =
   ReactRedux.connect(

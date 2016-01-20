@@ -13,15 +13,11 @@ function formatWind(wind) {
   return wind.toFixed(0) + WIND_SUFFIX;
 }
 
-function render() {
-  const w = this.props.weather;
+function WeatherCard(props) {
+  const w = props.weather;
   const template = 'http://icons.wxug.com/i/c/j/<ICON>.gif';
   const src = template.replace('<ICON>', w.icon);
-  const classes = [
-    'weathercard',
-    this.props.hidden ? 'hidden' : ''
-  ].join(' ');
-  return R('div', {className: classes},
+  return R('div', {className: 'weathercard'},
     R('img', {className: 'weather-icon', src: src}),
     R('div', {className: 'city'}, w.city),
     R('div', {className: 'temperature'}, formatTemp(w.temperature)),
@@ -32,11 +28,5 @@ function render() {
     )
   );
 }
-
-const WeatherCard =
-  React.createClass({
-    displayName: 'WeatherCard',
-    render: render
-  });
 
 exports.WeatherCard = WeatherCard;

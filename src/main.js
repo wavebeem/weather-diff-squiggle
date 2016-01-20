@@ -36,5 +36,5 @@ express()
     }
   })
   .listen(3000, () => {
-    console.log('Weather Diff listening on http://localhost:3000!');
+    console.log('Weather Diff listening on http://localhost:3000');
   });

@@ -13,10 +13,14 @@ function formatWind(wind) {
   return wind.toFixed(0) + WIND_SUFFIX;
 }
 
+function iconURL(icon) {
+  const template = 'http://icons.wxug.com/i/c/j/<ICON>.gif';
+  return template.replace('<ICON>', icon);
+}
+
 function WeatherCard(props) {
   const w = props.weather;
-  const template = 'http://icons.wxug.com/i/c/j/<ICON>.gif';
-  const src = template.replace('<ICON>', w.icon);
+  const src = iconURL(w.icon);
   return R('div', {className: 'weathercard'},
     R('img', {className: 'weather-icon', src: src}),
     R('div', {className: 'city'}, w.city),

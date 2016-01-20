@@ -93,8 +93,8 @@ body {
   text-align: center;
   margin-top: 10px;
   border: 2px solid rgba(83, 118, 156, 0.5);
-  border-radius: 2px;
-  background: #fff;
+  border-radius: 4px;
+  background: #EBF5FF;
   padding: 4px 10px;
   width: 7em;
 }

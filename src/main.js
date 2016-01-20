@@ -10,7 +10,7 @@ function extractWeatherData(data) {
   return {
     city: d.display_location.full,
     weather: d.weather,
-    temperature: d.temp_f,
+    temperature: Math.floor(d.temp_f),
     wind: d.wind_mph,
     icon: d.icon
   };

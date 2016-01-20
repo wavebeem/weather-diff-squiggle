@@ -3,6 +3,7 @@ const WeatherCard = require('./weather-card').WeatherCard;
 const ZipInput = require('./zip-input').ZipInput;
 const R = React.createElement;
 
+// Put a ZipInput before the element passed in
 function wrap(props, items) {
   const input =
     R(ZipInput, {
@@ -17,6 +18,7 @@ function message(props, text) {
   return wrap(props, R('div', {className: 'message'}, text));
 }
 
+// Show an error message or the WeatherCard
 function WeatherPicker(props) {
   if (!props.place.zipOk) {
     return message(props, 'Incorrect ZIP format.');

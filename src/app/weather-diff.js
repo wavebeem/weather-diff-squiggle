@@ -24,6 +24,7 @@ function WeatherDiff(props) {
 
 const helpText = 'Enter two valid ZIP codes below to compare weather.';
 
+// Either show a summary or help text depending on weather data existing
 function createSummary(props) {
   const p1 = props.place1;
   const p2 = props.place2;
@@ -41,6 +42,8 @@ function createSummary(props) {
   }
 }
 
+// Format the actual weather diff text, swapping the order of the locations so
+// that we only use the word 'warmer' and not the word 'cooler'
 function formatDiff(c1, c2, dt) {
   c1 = formatCity(c1);
   c2 = formatCity(c2);
@@ -58,10 +61,12 @@ function formatCity(cityName) {
   return R('span', {className: 'city-name'}, cityName);
 }
 
+// Pass the entire state from store.js to WeatherDiff since it's our root
 function mapStateToProps(state) {
   return state;
 }
 
+// Helper to dispatch changes to ZIP codes
 function updateZip(dispatch, n, value) {
   return dispatch({
     type: 'ZIP_CHANGE_' + n,
@@ -69,6 +74,8 @@ function updateZip(dispatch, n, value) {
   });
 }
 
+// Wrap up calls to dispatch so subcomponents just use regular functions and are
+// shielded from the Redux implementation details
 function mapDispatchToProps(dispatch) {
   return {
     updateZip1: updateZip.bind(null, dispatch, 1),
@@ -76,6 +83,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+// Wrap WeatherDiff with a ReactRedux connector so it can have its state managed
+// automatically by Redux
 exports.WeatherDiff =
   ReactRedux.connect(
     mapStateToProps,

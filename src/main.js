@@ -5,13 +5,15 @@ const WU = require('./weather-underground').withKey(WU_API_KEY);
 
 const STATIC_ROOT = __dirname + '/../app';
 
+// The client only needs a small subset of the data from Wunderground, so only
+// send that. Also, the front-end doesn't want decimal precision.
 function extractWeatherData(data) {
   const d = data.current_observation;
   return {
     city: d.display_location.full,
     weather: d.weather,
     temperature: Math.floor(d.temp_f),
-    wind: d.wind_mph,
+    wind: Math.floor(d.wind_mph),
     icon: d.icon
   };
 }

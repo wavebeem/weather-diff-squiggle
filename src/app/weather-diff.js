@@ -7,6 +7,7 @@ const R = React.createElement;
 
 function render() {
   return R('div', {className: 'weatherdiff'},
+      R('div', {}, this.props.message),
       R(WeatherPicker, {
         key: '1',
         place: this.props.place1,

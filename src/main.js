@@ -23,14 +23,14 @@ express()
   })
   .get('/weather/:zip', (req, res) => {
     const zip = req.params.zip;
-    const result = validators.zip(zip);
-    if (result[0]) {
-      WU.weather(result[1])
+    const ok = validators.zip(zip);
+    if (ok) {
+      WU.weather(zip)
         .then(extractWeatherData)
         .then(data => res.send(data))
         .catch(err => res.sendStatus(500));
     } else {
-      res.status(400).send({message: result[1]});
+      res.status(400).send({message: 'Invalid ZIP code'});
     }
   })
   .listen(3000, () => {

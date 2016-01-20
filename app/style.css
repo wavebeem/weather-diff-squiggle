@@ -4,16 +4,7 @@
 
 html {
   background: #e6f2ff;
-  background: linear-gradient(
-    to bottom,
-    #cccccc,
-    #cccccc 300px,
-    #dddddd 300px,
-    #dddddd 330px,
-    #eeeeee 330px,
-    #eeeeee 360px,
-    #ffffff 360px
-  );
+  background: linear-gradient(to top, #e6f2ff, #ffffff) fixed;
   color: rgba(0, 0, 0, 0.80);
   font-family: Helvetica, Arial, sans-serif;
   padding: 10px;
@@ -21,12 +12,13 @@ html {
 
 input {
   font-family: inherit;
+  font-size: inherit;
 }
 
 .main-logo {
   font-size: 5em;
   margin: 10px 0;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #fcaf3e;
   text-shadow:
     1px 1px 0 #f57900,
@@ -63,23 +55,40 @@ body {
   margin: 10px;
 }
 
-.zip {
-  font-size: 2em;
-  border: 0;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.30);
-  background: transparent;
-  color: #000;
-  padding: 10px;
-  margin-bottom: 20px;
-  width: 7em;
-  /*text-align: center;*/
+.weatherpicker .message {
+  text-align: center;
 }
 
-.zip:focus {
+.zipinput {
+  font-size: 1.5em;
+  color: #000;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.zipinput label {
+  font-weight: bold;
+  display: block;
+}
+
+.zipinput input {
+  display: block;
+  border: 0;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.30);
+  background: transparent;
+  padding: 4px 10px;
+  width: 7em;
+}
+
+.zipinput input:focus {
   outline: 3px solid #f57900;
 }
 
 .weathercard {
+
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
   border-radius: 20px;

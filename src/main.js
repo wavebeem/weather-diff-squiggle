@@ -1,4 +1,5 @@
 const express = require('express');
+const validators = require('./validators');
 const WU_API_KEY = require('./wu-api-key');
 const WU = require('./weather-underground').withKey(WU_API_KEY);
 

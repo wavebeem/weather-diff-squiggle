@@ -1,41 +1,50 @@
-const m = require('mithril');
+const React = require('react');
+const ReactRedux = require('react-redux');
 const store = require('./store').store;
-const WeatherPicker = require('./weather-picker');
+const WeatherPicker = require('./weather-picker').WeatherPicker;
 
-function send(type) {
-  function sendValue(value) {
-    store.dispatch({
-      type: type,
-      value: value
-    });
-  }
-  return m.withAttr('value', sendValue);
+const R = React.createElement;
+
+function render() {
+  return R('div', {className: 'weatherdiff'},
+      R(WeatherPicker, {
+        key: '1',
+        place: this.props.place1,
+        updateZip: this.props.updateZip1
+      }),
+      R(WeatherPicker, {
+        key: '2',
+        place: this.props.place2,
+        updateZip: this.props.updateZip2
+      })
+    );
 }
 
-function controller() {
+function mapStateToProps(state) {
+  return state;
+}
+
+function mapDispatchToProps(dispatch) {
   return {
-    updateZip1: send('ZIP_CHANGE_1'),
-    updateZip2: send('ZIP_CHANGE_2'),
+    updateZip1: value => dispatch({
+      type: 'ZIP_CHANGE_1',
+      value: value
+    }),
+    updateZip2: value => dispatch({
+      type: 'ZIP_CHANGE_2',
+      value: value
+    })
   };
 }
 
-function view(ctrl) {
-  const state = store.getState();
-  return m('.weatherdiff',
-    m.component(WeatherPicker, {
-      key: '1',
-      place: state.place1,
-      updateZip: ctrl.updateZip1
-    }),
-    m.component(WeatherPicker, {
-      key: '2',
-      place: state.place2,
-      updateZip: ctrl.updateZip2
-    }),
-    m('div', 'ZIP1: ', state.place1.zip),
-    m('div', 'ZIP2: ', state.place2.zip)
-  );
-}
+const WeatherDiff =
+  React.createClass({
+    displayName: 'WeatherDiff',
+    render: render
+  });
 
-exports.controller = controller;
-exports.view = view;
+exports.WeatherDiff =
+  ReactRedux.connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WeatherDiff);

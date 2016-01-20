@@ -1,5 +1,14 @@
-const m = require('mithril');
-const WeatherDiff = require('./weather-diff');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const ReactRedux = require('react-redux');
+const store = require('./store').store;
+const WeatherDiff = require('./weather-diff').WeatherDiff;
+
+const R = React.createElement;
 
 const root = document.getElementById('root');
-m.mount(root, WeatherDiff);
+const component =
+  R(ReactRedux.Provider, {store: store},
+    R(WeatherDiff)
+  );
+ReactDOM.render(component, root);

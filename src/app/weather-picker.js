@@ -1,24 +1,29 @@
-const m = require('mithril');
+const React = require('react');
+const WeatherCard = require('./weather-card').WeatherCard;
+const R = React.createElement;
 
-function controller(opts) {
-  return {
-    key: opts.key,
-    place: opts.place,
-    updateZip: opts.updateZip,
-  };
+function onInput(event) {
+  this.props.updateZip(event.target.value.trim());
 }
 
-function view(ctrl) {
-  console.log('SHOWING ZIP AS ', ctrl.place);
-  return m('.weatherpicker',
-    m('input.zip', {
-      key: ctrl.key,
-      value: ctrl.place.zip,
-      oninput: ctrl.updateZip
+function render() {
+  return R('div', {className: 'weatherpicker'},
+    R('input', {
+      className: 'zip',
+      placeholder: 'e.g. 97217',
+      key: this.props.key,
+      value: this.props.place.zip,
+      onInput: this.onInput
     }),
-    m('pre', JSON.stringify(ctrl.place))
+    R(WeatherCard, {weather: this.props.place.weather})
   );
 }
 
-exports.controller = controller;
-exports.view = view;
+const WeatherPicker =
+  React.createClass({
+    displayName: 'WeatherPicker',
+    render: render,
+    onInput: onInput
+  });
+
+exports.WeatherPicker = WeatherPicker;

@@ -1,6 +1,6 @@
 const Redux = require('redux');
-const m = require('mithril');
 const merge = require('./merge').merge;
+const validators = require('../validators');
 
 const emptyPlace = {
   zip: '',
@@ -17,17 +17,33 @@ const initialState = {
 // Both places should have the same logic for validating ZIP code and fetching
 // weather, so partially apply this function with their IDs.
 function placeReducer(id, state, action) {
-  console.log('[PLACE_' + id + ']', state, '/', action);
   if (state === undefined) {
-    console.log('REVERTING TO INITIAL VALUE for id', id);
     return emptyPlace;
+  } else if (action.type === 'WEATHER_CHANGE_' + id) {
+    return merge(state, {weather: action.value});
   } else if (action.type === 'ZIP_CHANGE_' + id) {
-    console.log('UPDATING ZIP_CHANGE_' + id);
-    // TODO: Fetch weather data and dispatch WEATHER_UPDATE for it.
-    return {zip: action.value, weather: null};
+    const zip = action.value;
+    const result = validators.zip(action.value);
+    const zipOk = result[0];
+    const zipMessage = zipOk ? '' : result[1];
+    // TODO: Do something useful if the weather request fails.
+    if (zipOk) {
+      fetch('/weather/' + zip)
+        .then(x => x.json())
+        .then(x =>
+          store.dispatch({
+            type: 'WEATHER_CHANGE_' + id,
+            value: x
+          })
+        );
+    }
+    return merge(state, {
+      zip: zip,
+      zipOk: zipOk,
+      zipMessage: zipMessage,
+      weather: null
+    });
   } else {
-    console.log('UNRECOGNIZED : ' + action.type);
-    console.log('EXPECTED     : ZIP_CHANGE_' + id);
     return state;
   }
 }
@@ -39,14 +55,5 @@ const reducer =
   });
 
 const store = Redux.createStore(reducer, initialState);
-
-// Tell Mithril that a computation has happened when the store has a new state.
-store.subscribe(() => {
-  console.log('STATE:', JSON.stringify(store.getState()));
-  m.redraw.strategy('all');
-  m.redraw();
-  // m.startComputation();
-  // m.endComputation();
-});
 
 exports.store = store;

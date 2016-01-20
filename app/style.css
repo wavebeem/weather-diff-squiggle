@@ -3,9 +3,20 @@
 }
 
 html {
-  background: #eefaff;
+  background: #e6f2ff;
+  background: linear-gradient(
+    to bottom,
+    #cccccc,
+    #cccccc 300px,
+    #dddddd 300px,
+    #dddddd 330px,
+    #eeeeee 330px,
+    #eeeeee 360px,
+    #ffffff 360px
+  );
   color: rgba(0, 0, 0, 0.80);
   font-family: Helvetica, Arial, sans-serif;
+  padding: 10px;
 }
 
 input {
@@ -17,7 +28,11 @@ input {
   margin: 10px 0;
   margin-bottom: 20px;
   color: #fcaf3e;
-  text-shadow: 1px 1px 0 #f57900, 2px 2px 0 #f57900, 3px 3px 0 #f57900;
+  text-shadow:
+    1px 1px 0 #f57900,
+    2px 2px 0 #f57900,
+    3px 3px 0 #f57900,
+    4px 4px 0 #f57900;
 }
 
 .wunderground-logo {
@@ -45,7 +60,7 @@ body {
 .weatherpicker {
   -webkit-flex: 1 0 300px;
   flex: 1 0 300px;
-  margin: 5px;
+  margin: 10px;
 }
 
 .zip {
@@ -56,8 +71,8 @@ body {
   color: #000;
   padding: 10px;
   margin-bottom: 20px;
-  width: 4em;
-  text-align: center;
+  width: 7em;
+  /*text-align: center;*/
 }
 
 .zip:focus {
@@ -65,10 +80,9 @@ body {
 }
 
 .weathercard {
-  border: 1px solid rgba(0, 0, 0, 0.20);
   background: #fff;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.10);
-  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
+  border-radius: 20px;
   padding: 10px;
   text-align: center;
   font-size: 1.5em;

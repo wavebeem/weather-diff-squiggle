@@ -6,11 +6,11 @@ const WIND_SUFFIX = ' mph';
 const SEPARATOR = ' / ';
 
 function formatTemp(temp) {
-  if (typeof temp === 'number') {
-    return temp.toFixed(0) + TEMP_SUFFIX;
-  } else {
-    return EM_DASH + TEMP_SUFFIX;
-  }
+  return temp.toFixed(0) + TEMP_SUFFIX;
+}
+
+function formatWind(wind) {
+  return wind.toFixed(0) + WIND_SUFFIX;
 }
 
 function render() {
@@ -26,7 +26,7 @@ function render() {
     R('div', {className: 'city'}, w.city),
     R('div', {className: 'temperature'}, formatTemp(w.temperature)),
     R('div', {className: 'details'},
-      R('span', {className: 'wind'}, w.wind + WIND_SUFFIX),
+      R('span', {className: 'wind'}, formatWind(w.wind)),
       SEPARATOR,
       R('span', {className: 'weather'}, w.weather)
     )

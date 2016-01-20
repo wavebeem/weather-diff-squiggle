@@ -14,7 +14,7 @@ function wrap(items) {
 }
 
 function message(text) {
-    return this.wrap(R('div', {className: 'message'}, text));
+  return this.wrap(R('div', {className: 'message'}, text));
 }
 
 function render() {

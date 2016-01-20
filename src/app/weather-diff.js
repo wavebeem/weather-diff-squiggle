@@ -1,6 +1,5 @@
 const React = require('react');
 const ReactRedux = require('react-redux');
-const store = require('./store').store;
 const WeatherPicker = require('./weather-picker').WeatherPicker;
 
 const R = React.createElement;

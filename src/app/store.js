@@ -31,20 +31,6 @@ function fetchWeather(zip) {
     .then(getJSON);
 }
 
-function dispatchWeatherChange(id, x) {
-  store.dispatch({
-    type: 'WEATHER_CHANGE_' + id,
-    value: x
-  })
-}
-
-function dispatchWeatherFail(id, e) {
-  store.dispatch({
-    type: 'WEATHER_FAIL_' + id,
-    value: e.message
-  });
-}
-
 function updateWeather(id, zip) {
   fetchWeather(zip)
     .then(dispatchWeatherChange.bind(null, id))
@@ -101,5 +87,19 @@ const reducer =
   });
 
 const store = Redux.createStore(reducer, initialState);
+
+function dispatchWeatherChange(id, x) {
+  store.dispatch({
+    type: 'WEATHER_CHANGE_' + id,
+    value: x
+  });
+}
+
+function dispatchWeatherFail(id, e) {
+  store.dispatch({
+    type: 'WEATHER_FAIL_' + id,
+    value: e.message
+  });
+}
 
 exports.store = store;

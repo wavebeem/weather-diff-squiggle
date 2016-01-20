@@ -1,5 +1,4 @@
 const React = require('react');
-const validators = require('../validators');
 const R = React.createElement;
 
 function onInput(event) {
@@ -26,6 +25,6 @@ const ZipInput =
     displayName: 'ZipInput',
     render: render,
     onInput: onInput
-  })
+  });
 
 exports.ZipInput = ZipInput;

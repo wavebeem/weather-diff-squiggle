@@ -1,9 +1,13 @@
+/* Border-box is the only box model that makes any sense */
+
 * {
   box-sizing: border-box;
 }
 
+/* Give the body a subtle sky-like gradient */
+
 html {
-  background: #e6f2ff;
+  background: #EBF5FF;
   background: linear-gradient(to bottom, #ffffff, #EBF5FF) fixed;
   color: rgba(0, 0, 0, 0.80);
   font-family: Helvetica, Arial, sans-serif;
@@ -11,43 +15,32 @@ html {
   min-height: 100%;
 }
 
-input {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-.main-logo {
-  font-size: 3em;
-  margin: 10px 0;
-  margin-bottom: 30px;
-  color: black;
-}
-
-.wunderground-logo {
-  display: inline-block;
-}
-
-.wunderground-logo img {
-  width: 385px;
-  max-width: 100%;
-}
-
 body {
   max-width: 900px;
   margin: 0 auto;
 }
 
-.weatherdiff {
-  text-align: center;
+/* Make inputs look more sensible by default */
+
+input {
+  font-family: inherit;
+  font-size: inherit;
 }
 
-.cardholder {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
-  -webkit-justify-content: space-around;
-  justify-content:space-around;
+/* Make the page title larger and centered */
+
+.main-logo {
+  font-size: 3em;
+  margin: 10px 0;
+  margin-bottom: 30px;
+  text-align: center;
+  color: black;
+}
+
+/* This container holds the summary/help text and the CardHolder */
+
+.weatherdiff {
+  text-align: center;
 }
 
 .weatherdiff .summary {
@@ -62,6 +55,19 @@ body {
   margin-bottom: 1em;
 }
 
+/* This exists just to be a flexbox wrapper for the WeatherPickers */
+
+.cardholder {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-justify-content: space-around;
+  justify-content:space-around;
+}
+
+/* The container for the ZIP input and WeatherCard */
+
 .weatherpicker {
   -webkit-flex: 1 0 50%;
   flex: 1 0 300px;
@@ -73,6 +79,8 @@ body {
   font-weight: bold;
   color: #cc0000;
 }
+
+/* Styles for friendly ZIP inputs */
 
 .zipinput {
   font-size: 1.5em;
@@ -106,6 +114,8 @@ body {
   background: #fff;
 }
 
+/* Styles for the card that shows the weather details */
+
 .weathercard {
   background: #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.15);
@@ -116,31 +126,29 @@ body {
   opacity: 1;
 }
 
-.weather-icon {
+.weathercard .weather-icon {
   width: 100px;
 }
 
-.city {
+.weathercard .city {
   font-size: 1.5em;
   margin-bottom: 10px;
 }
 
-.city-name {
+.weathercard .city-name {
   font-weight: bold;
 }
 
-.temperature {
+.weathercard .temperature {
   font-size: 3em;
   margin-bottom: 10px;
 }
 
-.details {
+.weathercard .details {
   margin-bottom: 10px;
 }
 
-h1 {
-  text-align: center;
-}
+/* Keep the footer simple, and make the Wunderground logo fit */
 
 footer {
   padding: 20px;
@@ -149,4 +157,13 @@ footer {
 
 footer a {
   color: inherit;
+}
+
+.wunderground-logo {
+  display: inline-block;
+}
+
+.wunderground-logo img {
+  width: 385px;
+  max-width: 100%;
 }

@@ -20,6 +20,14 @@ JShint and JSCS are configured to enforce code correctness and style
 npm run test
 ```
 
+To have the frontend JS code automatically rebuild as you develop:
+
+```bash
+npm run watch
+```
+
+Note that `npm run build` can be used to produce an optimized JS bundle for production.
+
 Code for the Node.js server is in `src/`, and code for the JS frontend is in `src/app/`. The `app/` folder contains the CSS, HTML, and image assets.
 
 ## License
@@ -29,3 +37,7 @@ MIT
 ## Code of Conduct
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
+
+## TODO
+
+- Add tests

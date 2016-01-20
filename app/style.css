@@ -55,6 +55,10 @@ input {
   margin-bottom: 1em;
 }
 
+.weatherdiff .summary .city-name {
+  font-weight: bold;
+}
+
 /* This exists just to be a flexbox wrapper for the WeatherPickers */
 
 .cardholder {
@@ -133,10 +137,6 @@ input {
 .weathercard .city {
   font-size: 1.5em;
   margin-bottom: 10px;
-}
-
-.weathercard .city-name {
-  font-weight: bold;
 }
 
 .weathercard .temperature {

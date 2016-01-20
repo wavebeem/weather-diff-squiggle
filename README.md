@@ -4,6 +4,8 @@ Weather Diff is a small web UI for diffing weather between two locations by ZIP 
 
 ## Getting Started
 
+You must have Node.js (≥v4.1.1) and NPM installed.
+
 ```bash
 npm install
 npm run build

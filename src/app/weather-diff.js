@@ -23,15 +23,17 @@ function render() {
 }
 
 function createSummary() {
-  var w1 = this.props.place1.weather;
-  var w2 = this.props.place2.weather;
+  const p1 = this.props.place1;
+  const p2 = this.props.place2;
+  var w1 = p1.weather;
+  var w2 = p2.weather;
   if (w1 && w2) {
     console.log(w1);
     console.log(w2);
     const t1 = w1.temperature;
     const t2 = w2.temperature;
-    const c1 = w1.city;
-    const c2 = w2.city;
+    const c1 = w1.city + ' (' + p1.zip + ')';
+    const c2 = w2.city + ' (' + p2.zip + ')';
     const dt = t1 - t2;
     return R('div', {className: 'summary'}, formatDiff(c1, c2, dt));
   } else {
@@ -40,14 +42,20 @@ function createSummary() {
 }
 
 function formatDiff(c1, c2, dt) {
+  c1 = formatCity(c1);
+  c2 = formatCity(c2);
   const diff = Math.abs(dt);
   if (dt < 0) {
-    return c2 + ' is ' + diff + ' ºF warmer than ' + c1 + '.';
+    return [c2, ' is ', diff, ' ºF warmer than ', c1, '.'];
   } else if (dt > 0) {
-    return c1 + ' is ' + diff + ' ºF warmer than ' + c2 + '.';
+    return [c1, ' is ', diff, ' ºF warmer than ', c2, '.'];
   } else {
-    return c1 + ' is the same temperature as ' + c2 + '.';
+    return [c1, ' is the same temperature as ', c2, '.'];
   }
+}
+
+function formatCity(cityName) {
+  return R('span', {className: 'city-name'}, cityName);
 }
 
 function mapStateToProps(state) {

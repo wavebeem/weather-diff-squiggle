@@ -1,0 +1,35 @@
+let {createElement: R} = require "react"
+
+let TEMP_SUFFIX = " ºF"
+let WIND_SUFFIX = " mph"
+let SEPARATOR = " / "
+
+def formatTemp(temp) do
+  temp.toFixed(0) .. TEMP_SUFFIX
+end
+
+def formatWind(wind) do
+  wind.toFixed(0) .. WIND_SUFFIX
+end
+
+def iconURL(icon) do
+  let template = "http://icons.wxug.com/i/c/j/<ICON>.gif"
+  template.replace("<ICON>", icon)
+end
+
+def WeatherCard(props, ...) do
+  let w = props.weather
+  let src = iconURL(w.icon)
+  R("div", {className: "weathercard"},
+    R("img", {className: "weather-icon", src}),
+    R("div", {className: "city"}, w.city),
+    R("div", {className: "temperature"}, formatTemp(w.temperature)),
+    R("div", {className: "details"},
+      R("span", {className: "wind"}, formatWind(w.wind)),
+      SEPARATOR,
+      R("span", {className: "weather"}, w.weather)
+    )
+  )
+end
+
+export WeatherCard

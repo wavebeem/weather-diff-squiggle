@@ -1,0 +1,21 @@
+let {createElement: R} = require "react"
+
+def onInput(props, event, ...) do
+  let text = event.target.value.trim()
+  props.updateZip(text)
+end
+
+def ZipInput(props, ...) do
+  R("div", {className: "zipinput"},
+    R("label", {},
+      "ZIP Code",
+      R("input", {
+        placeholder: "e.g. 97217",
+        value: props.value,
+        onInput: onInput.bind(null, props)
+      })
+    )
+  )
+end
+
+export ZipInput

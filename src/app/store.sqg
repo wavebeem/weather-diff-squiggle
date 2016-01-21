@@ -1,0 +1,125 @@
+let Redux = require "redux"
+let validators = require "../validators"
+let {fetch} = global
+
+let emptyPlace = {
+  zip: "",
+  zipOk: false,
+  weather: null,
+  weatherOk: true
+}
+
+let initialState = {
+  place1: emptyPlace,
+  place2: emptyPlace
+}
+
+# Reject non-2xx HTTP responses
+def assertOK(response) do
+  let {status, statusText} = response
+  if status < 200 or status >= 300 then
+    error statusText
+  else
+    response
+  end
+end
+
+def getJSON(response) do
+  response.json()
+end
+
+# Grab JSON from `/weather/:zip` endpoint
+def fetchWeather(zip) do
+  fetch("/weather/" .. zip)
+    .then(assertOK)
+    .then(getJSON)
+end
+
+# Get weather and dispatch appropriate message to store
+def updateWeather(id, zip) do
+  fetchWeather(zip)
+    .then(dispatchWeatherChange.bind(null, id))
+    .catch(dispatchWeatherFail.bind(null, id))
+end
+
+# Both places should have the same logic for validating ZIP code and fetching
+# weather, so partially apply this function with their IDs.
+def placeReducer(id, state, action) do
+  let {type} = action
+  # Return an empty place if the state hasn"t been initialized for this place
+  if state is undefined then
+    emptyPlace
+  # Weather fetched successfully
+  elseif type == "WEATHER_CHANGE_" .. id then
+    state ~ {
+      weatherOk: true,
+      weather: action.value,
+      message: ""
+    }
+  # Weather fetch failed
+  elseif type == "WEATHER_FAIL_" .. id then
+    state ~ {
+      weatherOk: false,
+      weather: null,
+      message: "Failed to retrieve weather"
+    }
+  # User typed new ZIP code
+  elseif type == "ZIP_CHANGE_" .. id then
+    let zip = action.value
+    let ok = validators.zip(zip)
+    # ZIP is formatted correctly
+    if ok then
+      updateWeather(id, zip)
+      state ~ {
+        zip: zip,
+        zipOk: true,
+        weather: null,
+        weatherOk: true,
+        message: ""
+      }
+    # ZIP is not formatted correctly
+    else
+      state ~ {
+        zip: zip,
+        zipOk: false,
+        weather: null,
+        weatherOk: true,
+        message: "Invalid ZIP code"
+      }
+    end
+  # Return the current state for unknown messages, which is important since
+  # Redux seems to throw some internal messages you shouldn't know about at
+  # your reducers :\
+  else
+    state
+  end
+end
+
+# Both place1 and place2 have the same exact state logic, so just reuse the
+# placeReducer partially applied with '1' or '2' for the appropriate IDs
+let reducer =
+  Redux.combineReducers({
+    place1: placeReducer.bind(null, "1"),
+    place2: placeReducer.bind(null, "2")
+  })
+
+let store = Redux.createStore(reducer, initialState)
+
+# JSHint was incorrectly complaining about using store before it was defined,
+# so I had to move these functions beneath store's definition.
+
+def dispatchWeatherChange(id, x) do
+  store.dispatch({
+    type: "WEATHER_CHANGE_" .. id,
+    value: x
+  })
+end
+
+def dispatchWeatherFail(id, e) do
+  store.dispatch({
+    type: "WEATHER_FAIL_" .. id,
+    value: e.message
+  })
+end
+
+export store

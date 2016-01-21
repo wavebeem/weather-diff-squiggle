@@ -1,0 +1,32 @@
+let {createElement: R} = require "react"
+let {WeatherCard} = require "./weather-card"
+let {ZipInput} = require "./zip-input"
+
+# Put a ZipInput before the element passed in
+def wrap(props, items) do
+  let input =
+    R(ZipInput, {
+      value: props.place.zip,
+      updateZip: props.updateZip
+    })
+  R("div", {className: "weatherpicker"}, input, items)
+end
+
+def message(props, text) do
+  wrap(props, R("div", {className: "message"}, text))
+end
+
+# Show an error message or the WeatherCard
+def WeatherPicker(props, ...) do
+  if not props.place.zipOk then
+    message(props, "Incorrect ZIP format.")
+  elseif not props.place.weatherOk then
+    message(props, "Location not found.")
+  elseif props.place.weather is null then
+    message(props, "Loading…")
+  else
+    wrap(props, R(WeatherCard, {weather: props.place.weather}))
+  end
+end
+
+export WeatherPicker

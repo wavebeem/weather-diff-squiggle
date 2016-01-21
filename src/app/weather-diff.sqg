@@ -1,19 +1,17 @@
 let {createElement: R} = require "react"
 let ReactRedux = require "react-redux"
 let {WeatherPicker} = require "./weather-picker"
-let {Math, console} = global
+let {Math} = global
 
 def WeatherDiff_(props, ...) do
   R("div", {className: "weatherdiff"},
       createSummary(props),
       R("div", {className: "cardholder"},
         R(WeatherPicker, {
-          key: "1",
           place: props.place1,
           updateZip: props.updateZip1
         }),
         R(WeatherPicker, {
-          key: "2",
           place: props.place2,
           updateZip: props.updateZip2
         })
@@ -29,9 +27,6 @@ def createSummary(props) do
   let p2 = props.place2
   let w1 = p1.weather
   let w2 = p2.weather
-  console.log("w1", w1)
-  console.log("w2", w2)
-  console.log("------")
   if w1 is null or w2 is null then
     R("div", {className: "summary"}, helpText)
   else

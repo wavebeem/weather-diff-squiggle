@@ -12,6 +12,8 @@ npm run build
 npm start
 ```
 
+Then open <http://localhost:3000>.
+
 ## Development
 
 JShint and JSCS are configured to enforce code correctness and style

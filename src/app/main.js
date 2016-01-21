@@ -1,3 +1,4 @@
+require('whatwg-fetch'); // polyfill fetch
 const React = require('react');
 const ReactDOM = require('react-dom');
 const ReactRedux = require('react-redux');

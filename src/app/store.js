@@ -43,6 +43,7 @@ function updateWeather(id, zip) {
 // Both places should have the same logic for validating ZIP code and fetching
 // weather, so partially apply this function with their IDs.
 function placeReducer(id, state, action) {
+  console.log('ACTION', action);
   // Return an empty place if the state hasn't been initialized for this place
   if (state === undefined) {
     return emptyPlace;

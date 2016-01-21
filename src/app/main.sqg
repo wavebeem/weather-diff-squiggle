@@ -1,0 +1,19 @@
+require "whatwg-fetch" # polyfill fetch
+let {createElement: R} = require "react"
+let ReactDOM = require "react-dom"
+let ReactRedux = require "react-redux"
+let {store} = require "./store"
+let {WeatherDiff} = require "./weather-diff"
+let {document} = global
+
+# def Hello(...) do
+#   R("div", null, "Hello!")
+# end
+
+let root = document.getElementById("root")
+# let component = R(Hello, {})
+let component =
+  R(ReactRedux.Provider, {store},
+    R(WeatherDiff)
+  )
+ReactDOM.render(component, root)

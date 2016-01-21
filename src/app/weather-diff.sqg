@@ -1,0 +1,96 @@
+let {createElement: R} = require "react"
+let ReactRedux = require "react-redux"
+let {WeatherPicker} = require "./weather-picker"
+let {Math, console} = global
+
+def WeatherDiff_(props, ...) do
+  R("div", {className: "weatherdiff"},
+      createSummary(props),
+      R("div", {className: "cardholder"},
+        R(WeatherPicker, {
+          key: "1",
+          place: props.place1,
+          updateZip: props.updateZip1
+        }),
+        R(WeatherPicker, {
+          key: "2",
+          place: props.place2,
+          updateZip: props.updateZip2
+        })
+      )
+    )
+end
+
+let helpText = "Enter two valid ZIP codes below to compare weather."
+
+# Either show a summary or help text depending on weather data existing
+def createSummary(props) do
+  let p1 = props.place1
+  let p2 = props.place2
+  let w1 = p1.weather
+  let w2 = p2.weather
+  console.log("w1", w1)
+  console.log("w2", w2)
+  console.log("------")
+  if w1 is null or w2 is null then
+    R("div", {className: "summary"}, helpText)
+  else
+    let t1 = w1.temperature
+    let t2 = w2.temperature
+    let c1 = w1.city .. " (" .. p1.zip .. ")"
+    let c2 = w2.city .. " (" .. p2.zip .. ")"
+    let dt = t1 - t2
+    R("div", {className: "summary"}, formatDiff(c1, c2, dt))
+  end
+end
+
+# Format the actual weather diff text, swapping the order of the locations so
+# that we only use the word "warmer" and not the word "cooler"
+def formatDiff(c1_, c2_, dt) do
+  let c1 = formatCity(c1_)
+  let c2 = formatCity(c2_)
+  let diff = Math.abs(dt)
+  if dt < 0 then
+    R("span", {}, c2, " is ", diff, " ºF warmer than ", c1, ".")
+  elseif dt > 0 then
+    R("span", {}, c1, " is ", diff, " ºF warmer than ", c2, ".")
+  else
+    R("span", {}, c1, " is the same temperature as ", c2, ".")
+  end
+end
+
+def formatCity(cityName) do
+  R("span", {className: "city-name"}, cityName)
+end
+
+# Pass the entire state from store.js to WeatherDiff since it's our root
+def mapStateToProps(state) do
+  state
+end
+
+# Helper to dispatch changes to ZIP codes
+def updateZip(dispatch, n, value) do
+  dispatch({
+    type: "ZIP_CHANGE_" .. n,
+    value
+  })
+end
+
+# Wrap up calls to dispatch so subcomponents just use regular functions and are
+# shielded from the Redux implementation details
+def mapDispatchToProps(dispatch) do
+  {
+    updateZip1: updateZip.bind(null, dispatch, 1),
+    updateZip2: updateZip.bind(null, dispatch, 2)
+  }
+end
+
+# Wrap WeatherDiff with a ReactRedux connector so it can have its state managed
+# automatically by Redux
+let WeatherDiff =
+  ReactRedux.connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WeatherDiff_)
+
+export WeatherDiff

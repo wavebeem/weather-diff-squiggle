@@ -1,11 +1,11 @@
 {
-  "name": "weather-diff",
+  "name": "weather-diff-squiggle",
   "version": "0.0.1",
   "description": "A web UI to diff two weather forecasts by ZIP code",
   "main": "src/main.js",
   "scripts": {
-    "watch": "watchify --debug src/app/main.js -o app/bundle.js",
-    "build": "NODE_ENV=production browserify -t envify -t uglifyify src/app/main.js | uglifyjs -c > app/bundle.js",
+    "watch": "watchify --debug --extension=.sqg -t squiggle-browserify src/app/main.sqg -o app/bundle.js",
+    "build": "NODE_ENV=production browserify --extension=.sqg -t squiggle-browserify -t envify -t uglifyify src/app/main.sqg | uglifyjs -c > app/bundle.js",
     "start": "node src/main.js",
     "test": "jshint src && jscs src"
   },
@@ -16,6 +16,7 @@
     "envify": "^3.4.0",
     "jscs": "^2.8.0",
     "jshint": "^2.9.1",
+    "squiggle-browserify": "0.0.3",
     "uglify-js": "^2.6.1",
     "uglifyify": "^3.0.1",
     "watchify": "^3.7.0"
